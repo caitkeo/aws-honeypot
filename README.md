@@ -30,6 +30,6 @@ EC2 → Cowrie → CloudWatch Logs → Dashboard → Alerts
 
 ## Screenshots
 
-![Crowie Dashboard Screenshot](screenshots/crowie-dash-1.png)
-![Crowie Dashboard Screenshot Part 2](screenshots/crowie-dash-2.png)
-![Crowie Dashboard Screenshot Part 3](screenshots/crowie-dash-3.png)
+![Crowie Dashboard Screenshot](screenshots/crowrie-dash-1.png)
+![Crowie Dashboard Screenshot Part 2](screenshots/cowrie-dash-2.png)
+![Crowie Dashboard Screenshot Part 3](screenshots/cowrie-dash-3.png)
