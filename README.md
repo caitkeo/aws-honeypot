@@ -119,4 +119,103 @@ It includes:
 ![Crowie Dashboard Screenshot Part 2](screenshots/cowrie-dash-2.png)
 ![Crowie Dashboard Screenshot Part 3](screenshots/cowrie-dash-3.png)
 
+## Detection Engineering
+A CloudWatch metric filter monitors Cowrie command execution events.
+
+Metric Filter Pattern: { $.eventid = "cowrie.command.input" }
+Namespace: Cowrie/Honeypot
+Metric Name: CommandsExecuted
+Metric Value: 1
+
+Every cowrie.command.input event increments the custom CloudWatch metric.
+
+## Automated Security Alerting
+A CloudWatch alarm monitors the custom CommandsExecuted metric.
+
+![CloudWatch Alarm Dashboard](screenshots/cowrie-alarm-dash.png)
+
+If five or more commands are recorded within a five-minute period, the CloudWatch alarm enters the ALARM state.
+
+## Amazon SNS Notifications
+The CloudWatch alarm is connected to an Amazon SNS topic.
+
+When the alarm enters the ALARM state:
+
+Cowrie Activity -> CloudWatch Metric Filter -> CommandsExecuted Metric -> CloudWatch Alarm -> Amazon SNS -> Email Notification
+
+Example of email notification: 
+![Email SNS Notification 1](screenshots/cowrie-email1.png)
+![Email SNS Notification 2](screenshots/cowrie-email2.png)
+
+## Python Log Analysis 
+A Python script created utilizing Claude Code performs additional analysis directly against Cowrie JSON logs.
+
+Script:
+
+scripts/analyze_logs.py
+
+The script extracts and counts:
+- Cowrie event types
+- Connection source IPs
+- Usernames
+- Commands executed
+
+## Security Considerations
+Since this project intentionally exposes a honeypot to the internet, the following precautions were taken:
+- Administrative SSH access is separated from honeypot traffic.
+- Port 22 is restricted to a trusted source IP.
+- Cowrie is exposed separately on TCP port 2222.
+- AWS permissions are provided through an IAM instance role.
+- AWS access keys are not stored on the EC2 instance.
+- Private SSH keys are excluded from source control.
+- Cowrie authentication databases are excluded from the repository.
+- Raw Cowrie logs are excluded from source control.
+- Sensitive information is not included in public repo
+
+![IAM Security Recommendation Dashboard](screenshots/iam-security.png)
+
+## Skills Acquired
+Cloud Security
+- AWS EC2
+- IAM roles
+- Security groups
+- CloudWatch
+- Amazon SNS
+
+Cybersecurity
+- Honeypots
+- SSH security
+- Security monitoring
+- Log analysis
+- Detection engineering
+- Automated alerting
+- SOC-style workflows
+
+Technical
+- Linux administration
+- Python
+- JSON
+- CloudWatch Logs Insights
+- Networking
+- GitHub documentation
+
+## Lessons Learned 
+This project showed me how individual security components can be combined into an end-to-end monitoring pipeline. It also showed me the importance of visualizing results and data.
+
+Troubleshooting EC2 connectivity reinforced the importance of understanding the relationship between:
+- Public IP addressing
+- Security groups
+- SSH services
+- Listening ports
+- IAM permissions
+- Cloud networking
+
+
+
+
+
+
+
+
+
 
