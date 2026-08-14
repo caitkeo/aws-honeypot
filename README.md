@@ -72,8 +72,51 @@ cowrie.login.failed
 cowrie.command.input
 cowrie.session.closed
 
-## Screenshots
+## Honeypot Testing
+A controlled SSH connection was used to verify that Cowrie was accessible externally and correctly capturing activity.
+
+Example connection:
+
+![SSH Connection Established](screenshots/connection-established.png)
+
+Commands entered within the simulated environment were recorded by Cowrie as security events.
+
+## Cowrie JSON Logging
+Cowrie produces structured JSON telemetry containing fields such as:
+
+- Timestamp
+- Event ID
+- Source IP
+- Source port
+- Username
+- Authentication activity
+- Commands entered
+- Session information
+
+Sample of the logs:
+![Cowrie JSON Logs Documentation](screenshots/json-doc.png)
+
+## CloudWatch Log Collection
+The Amazon CloudWatch Agent runs on the EC2 instance and forwards:
+
+/home/ubuntu/cowrie/var/log/cowrie/cowrie.json
+
+to the cowrie-honeypot CloudWatch log group.
+
+Each EC2 instance uses a separate CloudWatch log stream and receives CloudWatch permissions through an IAM instance role, avoiding the need to store AWS access keys directly on the server.
+
+## SOC Monitoring Dashboard
+The CloudWatch dashboard provides visibility into the honeypot activity.
+
+It includes:
+- Honeypot activity timeline
+- Top connection source IPs
+- Successful honeypot logins
+- Most common usernames
+- Most common commands
 
 ![Crowie Dashboard Screenshot](screenshots/crowrie-dash-1.png)
 ![Crowie Dashboard Screenshot Part 2](screenshots/cowrie-dash-2.png)
 ![Crowie Dashboard Screenshot Part 3](screenshots/cowrie-dash-3.png)
+
+
