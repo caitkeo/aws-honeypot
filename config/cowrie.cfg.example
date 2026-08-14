@@ -1,0 +1,6 @@
+# Cowrie SSH Honeypot Example Configuration
+
+[ssh]
+
+# Cowrie honeypot listens publicly on TCP port 2222
+listen_endpoints = tcp:2222:interface=0.0.0.0
